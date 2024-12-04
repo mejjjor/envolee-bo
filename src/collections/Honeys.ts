@@ -4,8 +4,24 @@ export const Honeys: CollectionConfig = {
   access: {
     read: () => true,
   },
+  admin: {
+    livePreview: {
+      url: ({
+        data,
+        locale
+      }) => {
+        console.log(data, locale)
+        return `${process.env.FRONTOFFICE_URL}/miels/${data.id}?isDraft=true`
+      }
+    }
+  },
   versions: {
     maxPerDoc: 10,
+    drafts: {
+      autosave: {
+        interval: 200,
+      },
+    },
   },
   slug: 'honeys',
   labels: {
