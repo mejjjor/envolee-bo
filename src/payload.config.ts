@@ -1,7 +1,7 @@
 // storage-adapter-import-placeholder
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { lexicalEditor, FixedToolbarFeature } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -11,7 +11,10 @@ import { fr } from '@payloadcms/translations/languages/fr'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Honeys } from './collections/Honeys'
+import { Flowers } from './collections/Flowers'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+
+import { Config } from './payload-types'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -23,11 +26,14 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Honeys],
-  editor: lexicalEditor(),
+  collections: [Users, Media, Honeys, Flowers],
+  editor: lexicalEditor({
+    features: ({ defaultFeatures, rootFeatures }) => [...defaultFeatures, FixedToolbarFeature()],
+  }),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
+    declare: false, // defaults to true if not set
   },
   db: postgresAdapter({
     pool: {
@@ -53,3 +59,7 @@ export default buildConfig({
     // storage-adapter-placeholder
   ],
 })
+
+declare module 'payload' {
+  export interface GeneratedTypes extends Config {}
+}

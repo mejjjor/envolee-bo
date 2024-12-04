@@ -13,7 +13,8 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
-    miels: Miel;
+    honeys: Honey;
+    flowers: Flower;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -22,7 +23,8 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
-    miels: MielsSelect<false> | MielsSelect<true>;
+    honeys: HoneysSelect<false> | HoneysSelect<true>;
+    flowers: FlowersSelect<false> | FlowersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -97,11 +99,11 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "miels".
+ * via the `definition` "honeys".
  */
-export interface Miel {
-  id: number;
+export interface Honey {
   title: string;
+  id: string;
   description?: {
     root: {
       type: string;
@@ -117,6 +119,17 @@ export interface Miel {
     };
     [k: string]: unknown;
   } | null;
+  flowers?: (number | Flower)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "flowers".
+ */
+export interface Flower {
+  id: number;
+  name: string;
   updatedAt: string;
   createdAt: string;
 }
@@ -136,8 +149,12 @@ export interface PayloadLockedDocument {
         value: number | Media;
       } | null)
     | ({
-        relationTo: 'miels';
-        value: number | Miel;
+        relationTo: 'honeys';
+        value: string | Honey;
+      } | null)
+    | ({
+        relationTo: 'flowers';
+        value: number | Flower;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -216,11 +233,22 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "miels_select".
+ * via the `definition` "honeys_select".
  */
-export interface MielsSelect<T extends boolean = true> {
+export interface HoneysSelect<T extends boolean = true> {
   title?: T;
+  id?: T;
   description?: T;
+  flowers?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "flowers_select".
+ */
+export interface FlowersSelect<T extends boolean = true> {
+  name?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -262,9 +290,4 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface Auth {
   [k: string]: unknown;
-}
-
-
-declare module 'payload' {
-  export interface GeneratedTypes extends Config {}
 }

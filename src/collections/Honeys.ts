@@ -4,7 +4,10 @@ export const Honeys: CollectionConfig = {
   access: {
     read: () => true,
   },
-  slug: 'miels',
+  versions: {
+    maxPerDoc: 10,
+  },
+  slug: 'honeys',
   labels: {
     singular: {
       fr: 'Miel',
@@ -22,9 +25,23 @@ export const Honeys: CollectionConfig = {
       required: true,
     },
     {
+      name: 'id',
+      label: "url",
+      type: 'text',
+      required: true,
+      unique: true,
+    },
+    {
       name: 'description',
       label: "déscription",
       type: 'richText',
-    }
+    },
+    {
+      name: 'flowers',
+      label: "fleurs",
+      type: 'relationship',
+      relationTo: 'flowers',
+      hasMany: true
+    },
   ]
 }
