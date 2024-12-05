@@ -1,4 +1,5 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig, Block } from 'payload'
+import slugify from 'slugify';
 
 export const Honeys: CollectionConfig = {
   access: {
@@ -8,19 +9,15 @@ export const Honeys: CollectionConfig = {
     livePreview: {
       url: ({
         data,
-        locale
       }) => {
-        console.log(data, locale)
-        return `${process.env.FRONTOFFICE_URL}/miels/${data.id}?isDraft=true`
+        return `${process.env.FRONTOFFICE_URL}/miels/${data.id}/${data.slug}?isDraft=true`
       }
     }
   },
   versions: {
     maxPerDoc: 10,
     drafts: {
-      autosave: {
-        interval: 200,
-      },
+      autosave: true,
     },
   },
   slug: 'honeys',
@@ -41,12 +38,20 @@ export const Honeys: CollectionConfig = {
       required: true,
     },
     {
-      name: 'id',
+      name: 'slug',
       label: "url",
       type: 'text',
-      required: true,
-      unique: true,
-    },
+      hooks: {
+        beforeValidate: [
+          ({ value }) => {
+            if (value) {
+              return slugify(value.trim().toLowerCase())
+            }
+            return value
+          },
+        ],
+      }
+  },
     {
       name: 'description',
       label: "déscription",

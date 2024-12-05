@@ -28,7 +28,7 @@ export default buildConfig({
   },
   collections: [Users, Media, Honeys, Flowers],
   editor: lexicalEditor({
-    features: ({ defaultFeatures, rootFeatures }) => [...defaultFeatures, FixedToolbarFeature()],
+    features: ({ defaultFeatures }) => [...defaultFeatures, FixedToolbarFeature()],
   }),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
