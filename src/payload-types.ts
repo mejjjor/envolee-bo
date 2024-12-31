@@ -105,6 +105,7 @@ export interface Honey {
   id: number;
   title: string;
   slug?: string | null;
+  picture: number | Media;
   description?: {
     root: {
       type: string;
@@ -120,10 +121,11 @@ export interface Honey {
     };
     [k: string]: unknown;
   } | null;
+  weight?: string | null;
+  price?: string | null;
   flowers?: (number | Flower)[] | null;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -240,11 +242,13 @@ export interface MediaSelect<T extends boolean = true> {
 export interface HoneysSelect<T extends boolean = true> {
   title?: T;
   slug?: T;
+  picture?: T;
   description?: T;
+  weight?: T;
+  price?: T;
   flowers?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

@@ -1,5 +1,5 @@
 import type { CollectionConfig, Block } from 'payload'
-import slugify from 'slugify';
+import slugify from 'slugify'
 
 export const Honeys: CollectionConfig = {
   access: {
@@ -7,17 +7,9 @@ export const Honeys: CollectionConfig = {
   },
   admin: {
     livePreview: {
-      url: ({
-        data,
-      }) => {
-        return `${process.env.FRONTOFFICE_URL}/miels/${data.id}/${data.slug}?isDraft=true`
-      }
-    }
-  },
-  versions: {
-    maxPerDoc: 10,
-    drafts: {
-      autosave: true,
+      url: ({ data }) => {
+        return `${process.env.FRONTOFFICE_URL}/miels`
+      },
     },
   },
   slug: 'honeys',
@@ -29,17 +21,17 @@ export const Honeys: CollectionConfig = {
       fr: 'Miels',
     },
   },
-  dbName: "honeys",
+  dbName: 'honeys',
   fields: [
     {
       name: 'title',
-      label: "titre",
+      label: 'titre',
       type: 'text',
       required: true,
     },
     {
       name: 'slug',
-      label: "url",
+      label: 'url',
       type: 'text',
       hooks: {
         beforeValidate: [
@@ -50,19 +42,36 @@ export const Honeys: CollectionConfig = {
             return value
           },
         ],
-      }
-  },
+      },
+    },
+    {
+      name: 'picture',
+      label: 'image',
+      type: 'relationship',
+      relationTo: 'media',
+      required: true,
+    },
     {
       name: 'description',
-      label: "déscription",
+      label: 'déscription',
       type: 'richText',
     },
     {
+      name: 'weight',
+      label: 'poids',
+      type: 'text',
+    },
+    {
+      name: 'price',
+      label: 'prix',
+      type: 'text',
+    },
+    {
       name: 'flowers',
-      label: "fleurs",
+      label: 'fleurs',
       type: 'relationship',
       relationTo: 'flowers',
-      hasMany: true
+      hasMany: true,
     },
-  ]
+  ],
 }
