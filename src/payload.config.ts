@@ -26,7 +26,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Honeys, Flowers],
+  collections: [Honeys, Flowers, Media, Users],
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [...defaultFeatures, FixedToolbarFeature()],
   }),
@@ -54,7 +54,7 @@ export default buildConfig({
         media: true,
       },
       // Token provided by Vercel once Blob storage is added to your Vercel project
-      token: process.env.BLOB_READ_WRITE_TOKEN ?? "",
+      token: process.env.BLOB_READ_WRITE_TOKEN ?? '',
     }),
     // storage-adapter-placeholder
   ],
