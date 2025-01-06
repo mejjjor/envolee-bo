@@ -1,6 +1,4 @@
-// storage-adapter-import-placeholder
 import { postgresAdapter } from '@payloadcms/db-postgres'
-import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import { lexicalEditor, FixedToolbarFeature } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { buildConfig } from 'payload'
@@ -12,6 +10,9 @@ import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Honeys } from './collections/Honeys'
 import { Flowers } from './collections/Flowers'
+import { Titles } from './collections/Titles'
+import { Home } from './collections/Home'
+import { Courses } from './collections/Courses'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 
 import { Config } from './payload-types'
@@ -26,6 +27,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
+  globals: [Home, Titles, Courses],
   collections: [Honeys, Flowers, Media, Users],
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [...defaultFeatures, FixedToolbarFeature()],
@@ -33,7 +35,7 @@ export default buildConfig({
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
-    declare: false, // defaults to true if not set
+    declare: false,
   },
   db: postgresAdapter({
     pool: {
@@ -46,17 +48,14 @@ export default buildConfig({
   },
   sharp,
   plugins: [
-    payloadCloudPlugin(),
     vercelBlobStorage({
-      enabled: true, // Optional, defaults to true
-      // Specify which collections should use Vercel Blob
       collections: {
-        media: true,
+        [Media.slug]: {
+          prefix: process.env.NODE_ENV,
+        },
       },
-      // Token provided by Vercel once Blob storage is added to your Vercel project
       token: process.env.BLOB_READ_WRITE_TOKEN ?? '',
     }),
-    // storage-adapter-placeholder
   ],
 })
 

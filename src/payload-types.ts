@@ -32,8 +32,16 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    home: Home;
+    titles: Title;
+    course: Course;
+  };
+  globalsSelect: {
+    home: HomeSelect<false> | HomeSelect<true>;
+    titles: TitlesSelect<false> | TitlesSelect<true>;
+    course: CourseSelect<false> | CourseSelect<true>;
+  };
   locale: null;
   user: User & {
     collection: 'users';
@@ -98,6 +106,7 @@ export interface Honey {
 export interface Media {
   id: number;
   alt: string;
+  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -232,6 +241,7 @@ export interface FlowersSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -290,6 +300,135 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home".
+ */
+export interface Home {
+  id: number;
+  title: string;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  picture: number | Media;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "titles".
+ */
+export interface Title {
+  id: number;
+  honeyTitle: {
+    title: string;
+    picture: number | Media;
+  };
+  courseTitle: {
+    title: string;
+    picture: number | Media;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "course".
+ */
+export interface Course {
+  id: number;
+  content?:
+    | {
+        description: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        picture: number | Media;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'Content';
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home_select".
+ */
+export interface HomeSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  picture?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "titles_select".
+ */
+export interface TitlesSelect<T extends boolean = true> {
+  honeyTitle?:
+    | T
+    | {
+        title?: T;
+        picture?: T;
+      };
+  courseTitle?:
+    | T
+    | {
+        title?: T;
+        picture?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "course_select".
+ */
+export interface CourseSelect<T extends boolean = true> {
+  content?:
+    | T
+    | {
+        Content?:
+          | T
+          | {
+              description?: T;
+              picture?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

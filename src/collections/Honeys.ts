@@ -1,4 +1,4 @@
-import type { CollectionConfig, Block } from 'payload'
+import type { CollectionConfig } from 'payload'
 import slugify from 'slugify'
 
 export const Honeys: CollectionConfig = {
