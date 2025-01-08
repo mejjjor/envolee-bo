@@ -21,7 +21,7 @@ export default function Honey({
       <div>
         <div className="relative flex h-[280px] w-[300px] items-center justify-center overflow-hidden rounded-t-xl">
           <Image
-            src={`${process.env.NEXT_PUBLIC_PAYLOAD_URL}${picture}`}
+            src={picture}
             alt={pictureAlt}
             fill
             sizes="(max-width: 300px) 100vw, 300px"
