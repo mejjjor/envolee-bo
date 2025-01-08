@@ -1,6 +1,5 @@
-import type { GlobalConfig } from 'payload'
-import slugify from 'slugify'
-import ContentBlock from './ContentBlock'
+import type { GlobalConfig } from "payload";
+import ContentBlock from "./ContentBlock";
 
 export const Courses: GlobalConfig = {
   access: {
@@ -8,29 +7,47 @@ export const Courses: GlobalConfig = {
   },
   admin: {
     livePreview: {
-      url: ({ data }) => {
-        return `${process.env.FRONTOFFICE_URL}/formations`
+      url: () => {
+        return `${process.env.FRONTOFFICE_URL}/formations`;
       },
     },
   },
-  slug: 'course',
+  slug: "course",
   label: {
-    fr: 'Formation',
+    fr: "Formation",
   },
-  dbName: 'course',
+  dbName: "course",
   fields: [
     {
-      name: 'content',
+      name: "title",
+      label: {
+        fr: "Titre",
+      },
+      type: "text",
+      required: true,
+      maxLength: 100,
+    },
+    {
+      name: "picture",
+      label: {
+        fr: "Image",
+      },
+      type: "upload",
+      relationTo: "media",
+      required: true,
+    },
+    {
+      name: "content",
       labels: {
         singular: {
-          fr: 'Bloc de contenu',
+          fr: "Bloc de contenu",
         },
         plural: {
-          fr: 'Blocs de contenu',
+          fr: "Blocs de contenu",
         },
       },
-      type: 'blocks',
+      type: "blocks",
       blocks: [ContentBlock],
     },
   ],
-}
+};

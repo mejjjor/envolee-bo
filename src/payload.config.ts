@@ -1,24 +1,25 @@
-import { postgresAdapter } from '@payloadcms/db-postgres'
-import { lexicalEditor, FixedToolbarFeature } from '@payloadcms/richtext-lexical'
-import path from 'path'
-import { buildConfig } from 'payload'
-import { fileURLToPath } from 'url'
-import sharp from 'sharp'
-import { fr } from '@payloadcms/translations/languages/fr'
+import { postgresAdapter } from "@payloadcms/db-postgres";
+import {
+  lexicalEditor,
+  FixedToolbarFeature,
+} from "@payloadcms/richtext-lexical";
+import path from "path";
+import { buildConfig } from "payload";
+import { fileURLToPath } from "url";
+import sharp from "sharp";
+import { fr } from "@payloadcms/translations/languages/fr";
 
-import { Users } from './collections/Users'
-import { Media } from './collections/Media'
-import { Honeys } from './collections/Honeys'
-import { Flowers } from './collections/Flowers'
-import { Titles } from './collections/Titles'
-import { Home } from './collections/Home'
-import { Courses } from './collections/Courses'
-import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+import { Users } from "./collections/Users";
+import { Media } from "./collections/Media";
+import { Honeys } from "./collections/Honeys";
+import { Flowers } from "./collections/Flowers";
+import { Home } from "./collections/Home";
+import { Courses } from "./collections/Courses";
+import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
+import { HoneysPage } from "./collections/HoneysPage";
 
-import { Config } from './payload-types'
-
-const filename = fileURLToPath(import.meta.url)
-const dirname = path.dirname(filename)
+const filename = fileURLToPath(import.meta.url);
+const dirname = path.dirname(filename);
 
 export default buildConfig({
   admin: {
@@ -27,23 +28,22 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  globals: [Home, Titles, Courses],
+  globals: [Home, HoneysPage, Courses],
   collections: [Honeys, Flowers, Media, Users],
   editor: lexicalEditor({
-    features: ({ defaultFeatures }) => [...defaultFeatures, FixedToolbarFeature()],
+    features: ({ defaultFeatures }) => [
+      ...defaultFeatures,
+      FixedToolbarFeature(),
+    ],
   }),
-  secret: process.env.PAYLOAD_SECRET || '',
-  typescript: {
-    outputFile: path.resolve(dirname, 'payload-types.ts'),
-    declare: false,
-  },
+  secret: process.env.PAYLOAD_SECRET || "",
   db: postgresAdapter({
     pool: {
-      connectionString: process.env.DATABASE_URI || '',
+      connectionString: process.env.DATABASE_URI || "",
     },
   }),
   i18n: {
-    fallbackLanguage: 'fr',
+    fallbackLanguage: "fr",
     supportedLanguages: { fr },
   },
   sharp,
@@ -54,11 +54,7 @@ export default buildConfig({
           prefix: process.env.NODE_ENV,
         },
       },
-      token: process.env.BLOB_READ_WRITE_TOKEN ?? '',
+      token: process.env.BLOB_READ_WRITE_TOKEN ?? "",
     }),
   ],
-})
-
-declare module 'payload' {
-  export interface GeneratedTypes extends Config {}
-}
+});

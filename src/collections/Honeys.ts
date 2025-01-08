@@ -1,5 +1,5 @@
-import type { CollectionConfig } from 'payload'
-import slugify from 'slugify'
+import type { CollectionConfig } from "payload";
+import slugify from "slugify";
 
 export const Honeys: CollectionConfig = {
   access: {
@@ -7,71 +7,72 @@ export const Honeys: CollectionConfig = {
   },
   admin: {
     livePreview: {
-      url: ({ data }) => {
-        return `${process.env.FRONTOFFICE_URL}/miels`
+      url: () => {
+        return `${process.env.FRONTOFFICE_URL}/miels`;
       },
     },
+    useAsTitle: "title",
   },
-  slug: 'honeys',
+  slug: "honeys",
   labels: {
     singular: {
-      fr: 'Miel',
+      fr: "Miel",
     },
     plural: {
-      fr: 'Miels',
+      fr: "Miels",
     },
   },
-  dbName: 'honeys',
+  dbName: "honeys",
   fields: [
     {
-      name: 'title',
-      label: 'titre',
-      type: 'text',
+      name: "title",
+      label: "titre",
+      type: "text",
       required: true,
     },
     {
-      name: 'slug',
-      label: 'url',
-      type: 'text',
+      name: "slug",
+      label: "url",
+      type: "text",
       hooks: {
         beforeValidate: [
           ({ value }) => {
             if (value) {
-              return slugify(value.trim().toLowerCase())
+              return slugify(value.trim().toLowerCase());
             }
-            return value
+            return value;
           },
         ],
       },
     },
     {
-      name: 'picture',
-      label: 'image',
-      type: 'relationship',
-      relationTo: 'media',
+      name: "picture",
+      label: "image",
+      type: "relationship",
+      relationTo: "media",
       required: true,
     },
     {
-      name: 'description',
-      label: 'déscription',
-      type: 'richText',
+      name: "description",
+      label: "déscription",
+      type: "richText",
     },
     {
-      name: 'weight',
-      label: 'poids',
-      type: 'text',
+      name: "weight",
+      label: "poids",
+      type: "text",
     },
     {
-      name: 'price',
-      label: 'prix',
-      type: 'text',
+      name: "price",
+      label: "prix",
+      type: "text",
     },
     {
-      name: 'flowers',
-      label: 'fleurs',
-      type: 'relationship',
-      relationTo: 'flowers',
+      name: "flowers",
+      label: "fleurs",
+      type: "relationship",
+      relationTo: "flowers",
       hasMany: true,
     },
   ],
-}
+};

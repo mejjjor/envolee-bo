@@ -6,7 +6,7 @@ export const Titles: GlobalConfig = {
   },
   admin: {
     livePreview: {
-      url: ({ data }) => {
+      url: () => {
         return `${process.env.FRONTOFFICE_URL}`
       },
     },

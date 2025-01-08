@@ -1,41 +1,45 @@
-import type { GlobalConfig } from 'payload'
-import slugify from 'slugify'
+import type { GlobalConfig } from "payload";
 
 export const Home: GlobalConfig = {
   access: {
     read: () => true,
   },
+  versions: {
+    drafts: {
+      autosave: true,
+    },
+  },
   admin: {
     livePreview: {
-      url: ({ data }) => {
-        return `${process.env.FRONTOFFICE_URL}`
+      url: () => {
+        return `${process.env.FRONTOFFICE_URL}?draft=true`;
       },
     },
   },
-  slug: 'home',
+  slug: "home",
   label: {
-    fr: 'Accueil',
+    fr: "Accueil",
   },
-  dbName: 'home',
+  dbName: "home",
   fields: [
     {
-      name: 'title',
-      label: 'Titre',
-      type: 'text',
+      name: "title",
+      label: "Titre",
+      type: "text",
       required: true,
     },
     {
-      name: 'description',
-      label: 'déscription',
-      type: 'richText',
+      name: "description",
+      label: "déscription",
+      type: "richText",
       required: true,
     },
     {
-      name: 'picture',
-      label: 'image',
-      type: 'upload',
-      relationTo: 'media',
+      name: "picture",
+      label: "image",
+      type: "upload",
+      relationTo: "media",
       required: true,
     },
   ],
-}
+};

@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #f3f3eb;
+  /* --background: #f4f4e3; */
+
+  --foreground: #31312f;
+  /* --primary-color: #d3a130; */
+  /* --primary-color: rgb(233, 185, 12, 0.5); */
+  /* --primary-color: #ebbc0c7d; */
+  --primary-color: #fdde6b;
+  /* --secondary-color: #1cb38a; */
+  --primary-color-rgb: 253, 222, 107; /* Replace with RGB equivalent  */
+  --secondary-color-rgb: 28, 179, 138; /* Replace with RGB equivalent */
+  --accent-color-rgb: 235, 192, 50;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
