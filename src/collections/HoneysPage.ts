@@ -4,10 +4,17 @@ export const HoneysPage: GlobalConfig = {
   access: {
     read: () => true,
   },
+  versions: {
+    drafts: {
+      autosave: true,
+    },
+  },
   admin: {
     livePreview: {
-      url: () => {
-        return `${process.env.FRONTOFFICE_URL}/miels&draft=true`;
+      url: (data) => {
+        const url = new URL(data.req.headers.get("referer") ?? "");
+
+        return `${url.origin}/miels?draft=true`;
       },
     },
   },
@@ -36,7 +43,7 @@ export const HoneysPage: GlobalConfig = {
       required: true,
     },
     {
-      name: "miel",
+      name: "honeys",
       label: "liste des miels",
       type: "array",
       fields: [

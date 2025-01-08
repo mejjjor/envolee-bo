@@ -4,6 +4,7 @@ import Title from "@/components/Title";
 import PictureParagraph from "@/components/PictureParagraph";
 import { getCourses } from "@/api";
 import { RichText } from "@payloadcms/richtext-lexical/react";
+import { RefreshRouteOnSave } from "@/components/RefreshRouterOnSave";
 
 export const revalidate = 60;
 
@@ -18,12 +19,14 @@ export default async function Courses({
 
   return (
     <>
+      <RefreshRouteOnSave />
+
       <Hero className="overflow-hidden">
         <Image
           src={courses.picture.url ?? ""}
+          alt={courses.picture.alt}
           fill
           className="object-cover"
-          alt={courses.picture.alt}
         />
       </Hero>
       <Title>{courses.title}</Title>

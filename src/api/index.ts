@@ -2,32 +2,6 @@ import { getPayload } from "payload";
 import config from "@/payload.config";
 import { Flower, Honey, Media } from "@/payload-types";
 
-// const apiUrl = `${process.env.NEXT_PUBLIC_PAYLOAD_URL}/api`;
-
-// async function getHoneys(isDraft?: boolean) {
-//   const url = `${apiUrl}/honeys?depth=1&isDraft=${isDraft}`;
-//   const response = await fetch(url);
-//   return await response.json();
-// }
-
-// async function getTitles(isDraft?: boolean) {
-//   const url = `${apiUrl}/globals/titles?isDraft=${isDraft}`;
-//   const response = await fetch(url);
-//   return await response.json();
-// }
-
-// async function getHome(isDraft?: boolean) {
-//   const url = `${apiUrl}/globals/home?isDraft=${isDraft}`;
-//   const response = await fetch(url);
-//   return await response.json();
-// }
-
-// const API: IAPI = {
-//   getHoneys,
-//   getTitles,
-//   getHome,
-// };
-
 export const getHome = async ({ draft }: { draft: string }) => {
   const payload = await getPayload({ config });
 
@@ -54,7 +28,7 @@ export const getHoneys = async ({ draft }: { draft: string }) => {
 
   const data = {
     ...honeys,
-    content: honeys.miel?.map((content) => ({
+    content: honeys.honeys?.map((content) => ({
       ...content,
       honey: content.honey as Honey,
     })),
@@ -92,5 +66,39 @@ export const getCourses = async ({ draft }: { draft: string }) => {
       ...content,
       picture: content.picture as Media,
     })),
+  };
+};
+
+export const getFarming = async ({ draft }: { draft: string }) => {
+  const payload = await getPayload({ config });
+
+  const courses = await payload.findGlobal({
+    slug: "farming",
+    depth: 1,
+    draft: !!draft,
+  });
+
+  return {
+    ...courses,
+    picture: courses.picture as Media,
+    content: courses.content?.map((content) => ({
+      ...content,
+      picture: content.picture as Media,
+    })),
+  };
+};
+
+export const getContact = async ({ draft }: { draft: string }) => {
+  const payload = await getPayload({ config });
+
+  const contact = await payload.findGlobal({
+    slug: "contact",
+    depth: 1,
+    draft: !!draft,
+  });
+
+  return {
+    ...contact,
+    picture: contact.picture as Media,
   };
 };

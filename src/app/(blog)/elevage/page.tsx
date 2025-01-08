@@ -1,37 +1,43 @@
-import elevage from "@/../public/elevage.jpg";
-import bugfast from "@/../public/bugfast.jpg";
-
 import Hero from "@/components/Hero";
 import Image from "next/image";
 import Title from "@/components/Title";
 import PictureParagraph from "@/components/PictureParagraph";
+import { getFarming } from "@/api";
+import { RichText } from "@payloadcms/richtext-lexical/react";
 
 export const revalidate = 60;
 
-export default async function Courses() {
+export default async function Courses({
+  searchParams,
+}: {
+  searchParams: Promise<{ draft: string }>;
+}) {
+  const { draft } = await searchParams;
+
+  const farming = await getFarming({ draft });
+
   return (
     <>
       <Hero className="overflow-hidden">
         <Image
-          src={elevage}
-          className="h-auto w-screen object-cover"
-          priority
-          alt="miels"
+          src={farming.picture.url ?? ""}
+          alt={farming.picture.alt}
+          fill
+          className="object-cover"
         />
       </Hero>
-      <Title>Elevage</Title>
-      <PictureParagraph src={bugfast} alt="zzz">
-        <div>
-          Bugfast c est trop bien. um iaculis in ut velit. Curabitur erat ipsum,
-          scelerisque et massa a, faucibus porta turpis. Sed ultrices ex ut
-          velit lacinia molestie. Etiam turpis diam, congue non tortor ut,
-          feugiat convallis neque. Nulla pre.
-          <br />
-          <div className="inline-block cursor-pointer rounded-lg bg-accent/40 p-2 px-4">
-            Prix: 20€
-          </div>
-        </div>
-      </PictureParagraph>
+      <Title>{farming.title}</Title>
+
+      {farming.content?.map((content, index) => (
+        <PictureParagraph
+          position={index % 2 ? "right" : "left"}
+          key={content.id}
+          src={content.picture?.url ?? ""}
+          alt={content.picture?.alt}
+        >
+          <RichText data={content.description} />
+        </PictureParagraph>
+      ))}
     </>
   );
 }

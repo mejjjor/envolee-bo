@@ -1,16 +1,22 @@
-import contact from "@/../public/contact.jpg";
-
 import Title from "@/components/Title";
 import PictureParagraph from "@/components/PictureParagraph";
+import { getContact } from "@/api";
 
-export default function Courses() {
+export default async function Courses({
+  searchParams,
+}: {
+  searchParams: Promise<{ draft: string }>;
+}) {
+  const { draft } = await searchParams;
+
+  const contact = await getContact({ draft });
   return (
-    <PictureParagraph src={contact} alt="zzz">
+    <PictureParagraph src={contact.picture.url ?? ""} alt={contact.picture.alt}>
       <div className="flex flex-col">
         <div>
           <Title>Contactez moi !</Title>
         </div>
-        <h2 className="text-3xl py-16 my-44">
+        <h2 className="my-44 py-16 text-3xl">
           Merci pour votre message, je vous recontact rapidement
         </h2>
       </div>

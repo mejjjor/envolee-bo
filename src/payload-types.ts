@@ -15,9 +15,9 @@ export interface Config {
     flowers: Flower;
     media: Media;
     users: User;
-    "payload-locked-documents": PayloadLockedDocument;
-    "payload-preferences": PayloadPreference;
-    "payload-migrations": PayloadMigration;
+    'payload-locked-documents': PayloadLockedDocument;
+    'payload-preferences': PayloadPreference;
+    'payload-migrations': PayloadMigration;
   };
   collectionsJoins: {};
   collectionsSelect: {
@@ -25,32 +25,30 @@ export interface Config {
     flowers: FlowersSelect<false> | FlowersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
-    "payload-locked-documents":
-      | PayloadLockedDocumentsSelect<false>
-      | PayloadLockedDocumentsSelect<true>;
-    "payload-preferences":
-      | PayloadPreferencesSelect<false>
-      | PayloadPreferencesSelect<true>;
-    "payload-migrations":
-      | PayloadMigrationsSelect<false>
-      | PayloadMigrationsSelect<true>;
+    'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
+    'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
+    'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
     defaultIDType: number;
   };
   globals: {
     home: Home;
-    titles: Title;
+    honeyPage: HoneyPage;
     course: Course;
+    farming: Farming;
+    contact: Contact;
   };
   globalsSelect: {
     home: HomeSelect<false> | HomeSelect<true>;
-    titles: TitlesSelect<false> | TitlesSelect<true>;
+    honeyPage: HoneyPageSelect<false> | HoneyPageSelect<true>;
     course: CourseSelect<false> | CourseSelect<true>;
+    farming: FarmingSelect<false> | FarmingSelect<true>;
+    contact: ContactSelect<false> | ContactSelect<true>;
   };
   locale: null;
   user: User & {
-    collection: "users";
+    collection: 'users';
   };
   jobs: {
     tasks: unknown;
@@ -92,8 +90,8 @@ export interface Honey {
         version: number;
         [k: string]: unknown;
       }[];
-      direction: ("ltr" | "rtl") | null;
-      format: "left" | "start" | "center" | "right" | "end" | "justify" | "";
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
       indent: number;
       version: number;
     };
@@ -104,6 +102,7 @@ export interface Honey {
   flowers?: (number | Flower)[] | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -112,7 +111,6 @@ export interface Honey {
 export interface Media {
   id: number;
   alt: string;
-  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -160,24 +158,24 @@ export interface PayloadLockedDocument {
   id: number;
   document?:
     | ({
-        relationTo: "honeys";
+        relationTo: 'honeys';
         value: number | Honey;
       } | null)
     | ({
-        relationTo: "flowers";
+        relationTo: 'flowers';
         value: number | Flower;
       } | null)
     | ({
-        relationTo: "media";
+        relationTo: 'media';
         value: number | Media;
       } | null)
     | ({
-        relationTo: "users";
+        relationTo: 'users';
         value: number | User;
       } | null);
   globalSlug?: string | null;
   user: {
-    relationTo: "users";
+    relationTo: 'users';
     value: number | User;
   };
   updatedAt: string;
@@ -190,7 +188,7 @@ export interface PayloadLockedDocument {
 export interface PayloadPreference {
   id: number;
   user: {
-    relationTo: "users";
+    relationTo: 'users';
     value: number | User;
   };
   key?: string | null;
@@ -231,6 +229,7 @@ export interface HoneysSelect<T extends boolean = true> {
   flowers?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -247,7 +246,6 @@ export interface FlowersSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
-  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -322,31 +320,34 @@ export interface Home {
         version: number;
         [k: string]: unknown;
       }[];
-      direction: ("ltr" | "rtl") | null;
-      format: "left" | "start" | "center" | "right" | "end" | "justify" | "";
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
       indent: number;
       version: number;
     };
     [k: string]: unknown;
   };
-  picture: Media;
+  picture: number | Media;
+  _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "titles".
+ * via the `definition` "honeyPage".
  */
-export interface Title {
+export interface HoneyPage {
   id: number;
-  honeyTitle: {
-    title: string;
-    picture: number | Media;
-  };
-  courseTitle: {
-    title: string;
-    picture: number | Media;
-  };
+  title: string;
+  picture: number | Media;
+  honeys?:
+    | {
+        available: boolean;
+        honey: number | Honey;
+        id?: string | null;
+      }[]
+    | null;
+  _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -356,6 +357,8 @@ export interface Title {
  */
 export interface Course {
   id: number;
+  title: string;
+  picture: number | Media;
   content?:
     | {
         description: {
@@ -366,26 +369,67 @@ export interface Course {
               version: number;
               [k: string]: unknown;
             }[];
-            direction: ("ltr" | "rtl") | null;
-            format:
-              | "left"
-              | "start"
-              | "center"
-              | "right"
-              | "end"
-              | "justify"
-              | "";
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
             indent: number;
             version: number;
           };
           [k: string]: unknown;
         };
-        picture: number | Media;
+        picture?: (number | null) | Media;
         id?: string | null;
         blockName?: string | null;
-        blockType: "Content";
+        blockType: 'Content';
       }[]
     | null;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "farming".
+ */
+export interface Farming {
+  id: number;
+  title: string;
+  picture: number | Media;
+  content?:
+    | {
+        description: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        picture?: (number | null) | Media;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'Content';
+      }[]
+    | null;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact".
+ */
+export interface Contact {
+  id: number;
+  title: string;
+  picture: number | Media;
+  _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -397,27 +441,26 @@ export interface HomeSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   picture?: T;
+  _status?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "titles_select".
+ * via the `definition` "honeyPage_select".
  */
-export interface TitlesSelect<T extends boolean = true> {
-  honeyTitle?:
+export interface HoneyPageSelect<T extends boolean = true> {
+  title?: T;
+  picture?: T;
+  honeys?:
     | T
     | {
-        title?: T;
-        picture?: T;
+        available?: T;
+        honey?: T;
+        id?: T;
       };
-  courseTitle?:
-    | T
-    | {
-        title?: T;
-        picture?: T;
-      };
+  _status?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -427,6 +470,8 @@ export interface TitlesSelect<T extends boolean = true> {
  * via the `definition` "course_select".
  */
 export interface CourseSelect<T extends boolean = true> {
+  title?: T;
+  picture?: T;
   content?:
     | T
     | {
@@ -439,6 +484,43 @@ export interface CourseSelect<T extends boolean = true> {
               blockName?: T;
             };
       };
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "farming_select".
+ */
+export interface FarmingSelect<T extends boolean = true> {
+  title?: T;
+  picture?: T;
+  content?:
+    | T
+    | {
+        Content?:
+          | T
+          | {
+              description?: T;
+              picture?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact_select".
+ */
+export interface ContactSelect<T extends boolean = true> {
+  title?: T;
+  picture?: T;
+  _status?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
@@ -449,4 +531,9 @@ export interface CourseSelect<T extends boolean = true> {
  */
 export interface Auth {
   [k: string]: unknown;
+}
+
+
+declare module 'payload' {
+  export interface GeneratedTypes extends Config {}
 }

@@ -1,7 +1,7 @@
 import type { GlobalConfig } from "payload";
 import ContentBlock from "./ContentBlock";
 
-export const Courses: GlobalConfig = {
+export const Farming: GlobalConfig = {
   access: {
     read: () => true,
   },
@@ -15,15 +15,15 @@ export const Courses: GlobalConfig = {
       url: (data) => {
         const url = new URL(data.req.headers.get("referer") ?? "");
 
-        return `${url.origin}/formations?draft=true`;
+        return `${url.origin}/elevage?draft=true`;
       },
     },
   },
-  slug: "course",
+  slug: "farming",
   label: {
-    fr: "Formation",
+    fr: "Élevage",
   },
-  dbName: "course",
+  dbName: "farming",
   fields: [
     {
       name: "title",

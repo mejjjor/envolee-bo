@@ -48,10 +48,7 @@ export default async function Honeys({
       </Hero>
       <Title>{honeys.title}</Title>
 
-      <PageClient
-        honeys={honeys.content?.map((content) => content.honey) ?? []}
-        flowers={flowers}
-      />
+      <PageClient honeys={honeys} flowers={flowers} />
     </>
   );
 }

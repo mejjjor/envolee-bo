@@ -1,18 +1,25 @@
-import contact from "@/../public/contact.jpg";
 import Form from "next/form";
 
 import Title from "@/components/Title";
 import PictureParagraph from "@/components/PictureParagraph";
-import { FC } from "react";
-import { HTMLInputTypeAttribute } from "react";
+import { FC, HTMLInputTypeAttribute } from "react";
 import { submitForm } from "./action";
+import { getContact } from "@/api";
 
-export default function Courses() {
+export default async function Courses({
+  searchParams,
+}: {
+  searchParams: Promise<{ draft: string }>;
+}) {
+  const { draft } = await searchParams;
+
+  const contact = await getContact({ draft });
+
   return (
-    <PictureParagraph src={contact} alt="zzz">
+    <PictureParagraph src={contact.picture.url ?? ""} alt={contact.picture.alt}>
       <div className="flex flex-col">
         <div>
-          <Title>Contactez moi !</Title>
+          <Title>{contact.title}</Title>
         </div>
         <div className="py-2">
           Envoyer moi un email à&nbsp;
@@ -20,7 +27,7 @@ export default function Courses() {
             className="border-b border-accent"
             href="mailto:lenvolee.api@gmail.com"
           >
-            lenvolee.api(@)gmail.com
+            lenvolee.api@gmail.com
           </a>
           &nbsp; ou utilisez le formulaire suivant :
         </div>

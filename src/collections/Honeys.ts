@@ -5,10 +5,17 @@ export const Honeys: CollectionConfig = {
   access: {
     read: () => true,
   },
+  versions: {
+    drafts: {
+      autosave: true,
+    },
+  },
   admin: {
     livePreview: {
-      url: () => {
-        return `${process.env.FRONTOFFICE_URL}/miels`;
+      url: (data) => {
+        const url = new URL(data.req.headers.get("referer") ?? "");
+
+        return `${url.origin}/miels?draft=true`;
       },
     },
     useAsTitle: "title",

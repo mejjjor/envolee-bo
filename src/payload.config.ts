@@ -15,8 +15,11 @@ import { Honeys } from "./collections/Honeys";
 import { Flowers } from "./collections/Flowers";
 import { Home } from "./collections/Home";
 import { Courses } from "./collections/Courses";
-import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
+import { Contact } from "./collections/Contact";
+import { Farming } from "./collections/Farming";
 import { HoneysPage } from "./collections/HoneysPage";
+
+import { vercelBlobStorage } from "@payloadcms/storage-vercel-blob";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -28,7 +31,10 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  globals: [Home, HoneysPage, Courses],
+  typescript: {
+    outputFile: path.resolve(dirname, "payload-types.ts"),
+  },
+  globals: [Home, HoneysPage, Courses, Farming, Contact],
   collections: [Honeys, Flowers, Media, Users],
   editor: lexicalEditor({
     features: ({ defaultFeatures }) => [

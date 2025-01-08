@@ -3,15 +3,15 @@
 import Honey from "@/components/Honey";
 import { FC, useState } from "react";
 import { cn } from "@/utils/cn";
-import { Honey as IHoney } from "payload-types";
-import { Flower, Media } from "@/payload-types";
+import { Flower } from "@/payload-types";
+import { getHoneys } from "@/api";
 
 // export const dynamic = 'force-dynamic';
 export const revalidate = 60;
 // export const experimental_ppr = true
 
 const HoneysClient: FC<{
-  honeys: IHoney[];
+  honeys: Awaited<ReturnType<typeof getHoneys>>;
   flowers: string[];
 }> = ({ honeys, flowers }) => {
   const [currentFilter, setCurrentFilter] = useState("Toutes");
@@ -40,24 +40,26 @@ const HoneysClient: FC<{
       </div>
 
       <div className="flex flex-wrap justify-center gap-8 sm:mt-8 sm:gap-16">
-        {honeys
-          .filter(
-            (honey) =>
+        {honeys.content
+          ?.filter(
+            (content) =>
               currentFilter === "Toutes" ||
-              honey.flowers?.find(
+              content.honey.flowers?.find(
                 (flower) => (flower as Flower).name === currentFilter,
               ),
           )
-          .map((honey) => (
+          .map((content) => (
             <Honey
-              key={honey.id}
-              title={honey.title}
-              picture={(honey.picture as Media).url ?? ""}
-              pictureAlt={(honey.picture as Media).alt}
-              weight={honey.weight ?? ""}
-              price={honey.price ?? ""}
+              key={content.honey.id}
+              title={content.honey.title}
+              picture={content.honey.picture.url ?? ""}
+              pictureAlt={content.honey.picture.alt}
+              weight={content.honey.weight ?? ""}
+              price={content.honey.price ?? ""}
               flowers={
-                honey.flowers?.map((flower) => (flower as Flower).name) ?? []
+                content.honey.flowers?.map(
+                  (flower) => (flower as Flower).name,
+                ) ?? []
               }
             />
           ))}

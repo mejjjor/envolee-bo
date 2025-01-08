@@ -11,8 +11,10 @@ export const Home: GlobalConfig = {
   },
   admin: {
     livePreview: {
-      url: () => {
-        return `${process.env.FRONTOFFICE_URL}?draft=true`;
+      url: (data) => {
+        const url = new URL(data.req.headers.get("referer") ?? "");
+
+        return `${url.origin}?draft=true`;
       },
     },
   },

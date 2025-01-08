@@ -1,7 +1,6 @@
 import type { GlobalConfig } from "payload";
-import ContentBlock from "./ContentBlock";
 
-export const Courses: GlobalConfig = {
+export const Contact: GlobalConfig = {
   access: {
     read: () => true,
   },
@@ -15,15 +14,15 @@ export const Courses: GlobalConfig = {
       url: (data) => {
         const url = new URL(data.req.headers.get("referer") ?? "");
 
-        return `${url.origin}/formations?draft=true`;
+        return `${url.origin}/contact?draft=true`;
       },
     },
   },
-  slug: "course",
+  slug: "contact",
   label: {
-    fr: "Formation",
+    fr: "Contact",
   },
-  dbName: "course",
+  dbName: "contact",
   fields: [
     {
       name: "title",
@@ -42,19 +41,6 @@ export const Courses: GlobalConfig = {
       type: "upload",
       relationTo: "media",
       required: true,
-    },
-    {
-      name: "content",
-      labels: {
-        singular: {
-          fr: "Bloc de contenu",
-        },
-        plural: {
-          fr: "Blocs de contenu",
-        },
-      },
-      type: "blocks",
-      blocks: [ContentBlock],
     },
   ],
 };
