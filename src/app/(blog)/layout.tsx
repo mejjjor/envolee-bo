@@ -14,8 +14,8 @@ const poppins = Poppins({
 const home = await getHome({});
 
 export const metadata: Metadata = {
-  title: home.seo[0].title,
-  description: home.seo[0].description,
+  title: home.seo[0].title ?? "",
+  description: home.seo[0].description ?? "",
 };
 
 export default async function RootLayout({

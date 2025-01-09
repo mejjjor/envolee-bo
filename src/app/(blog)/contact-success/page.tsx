@@ -19,7 +19,7 @@ export default async function Courses({
     <PictureParagraph src={contact.picture.url ?? ""} alt={contact.picture.alt}>
       <div className="flex flex-col">
         <div>
-          <Title>Contactez moi !</Title>
+          <Title>{contact.title}</Title>
         </div>
         <h2 className="my-44 py-16 text-3xl">
           Merci pour votre message, je vous recontact rapidement
