@@ -25,7 +25,7 @@ export default async function Honeys({
 
   const flowersList = honeys.honeys?.reduce<string[]>((acc, honey) => {
     acc.push(
-      ...(honey.honey.flowers?.map((flower) => (flower as Flower).name) ?? []),
+      ...(honey.flowers?.map((flower) => (flower as Flower).name) ?? []),
     );
 
     return acc;

@@ -1,5 +1,4 @@
 import type { CollectionConfig } from "payload";
-import slugify from "slugify";
 
 export const Honeys: CollectionConfig = {
   access: {
@@ -37,26 +36,18 @@ export const Honeys: CollectionConfig = {
       type: "text",
       required: true,
     },
-    {
-      name: "slug",
-      label: "url",
-      type: "text",
-      hooks: {
-        beforeValidate: [
-          ({ value }) => {
-            if (value) {
-              return slugify(value.trim().toLowerCase());
-            }
-            return value;
-          },
-        ],
-      },
-    },
+
     {
       name: "picture",
       label: "image",
       type: "relationship",
       relationTo: "media",
+      required: true,
+    },
+    {
+      name: "available",
+      label: "disponible",
+      type: "checkbox",
       required: true,
     },
     {

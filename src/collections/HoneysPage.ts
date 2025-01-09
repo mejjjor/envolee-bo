@@ -42,25 +42,5 @@ export const HoneysPage: GlobalConfig = {
       relationTo: "media",
       required: true,
     },
-    {
-      name: "honeys",
-      label: "liste des miels",
-      type: "array",
-      fields: [
-        {
-          name: "available",
-          label: "Visible",
-          type: "checkbox",
-          required: true,
-        },
-        {
-          name: "honey",
-          label: "Miel",
-          type: "relationship",
-          relationTo: "honeys",
-          required: true,
-        },
-      ],
-    },
   ],
 };

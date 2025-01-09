@@ -80,8 +80,8 @@ export interface UserAuthOperations {
 export interface Honey {
   id: number;
   title: string;
-  slug?: string | null;
   picture: number | Media;
+  available: boolean;
   description?: {
     root: {
       type: string;
@@ -111,7 +111,6 @@ export interface Honey {
 export interface Media {
   id: number;
   alt: string;
-  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -222,8 +221,8 @@ export interface PayloadMigration {
  */
 export interface HoneysSelect<T extends boolean = true> {
   title?: T;
-  slug?: T;
   picture?: T;
+  available?: T;
   description?: T;
   weight?: T;
   price?: T;
@@ -247,7 +246,6 @@ export interface FlowersSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
-  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -342,13 +340,6 @@ export interface HoneyPage {
   id: number;
   title: string;
   picture: number | Media;
-  honeys?:
-    | {
-        available: boolean;
-        honey: number | Honey;
-        id?: string | null;
-      }[]
-    | null;
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -455,13 +446,6 @@ export interface HomeSelect<T extends boolean = true> {
 export interface HoneyPageSelect<T extends boolean = true> {
   title?: T;
   picture?: T;
-  honeys?:
-    | T
-    | {
-        available?: T;
-        honey?: T;
-        id?: T;
-      };
   _status?: T;
   updatedAt?: T;
   createdAt?: T;

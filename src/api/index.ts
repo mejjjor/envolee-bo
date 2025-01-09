@@ -1,6 +1,6 @@
 import { getPayload } from "payload";
 import config from "@/payload.config";
-import { Flower, Honey, Media } from "@/payload-types";
+import { Flower, Media } from "@/payload-types";
 
 export const getHome = async ({ draft }: { draft: string }) => {
   const payload = await getPayload({ config });
@@ -20,32 +20,28 @@ export const getHome = async ({ draft }: { draft: string }) => {
 export const getHoneys = async ({ draft }: { draft: string }) => {
   const payload = await getPayload({ config });
 
-  const honeys = await payload.findGlobal({
+  const honeysPage = await payload.findGlobal({
     slug: "honeyPage",
-    depth: 2,
+    depth: 1,
     draft: !!draft,
   });
 
-  const data = {
-    ...honeys,
-    honeys: honeys.honeys?.map((content) => ({
-      ...content,
-      honey: content.honey as Honey,
-    })),
-    picture: honeys.picture as Media,
-  };
+  const honeys = await payload.find({
+    collection: "honeys",
+    depth: 1,
+    draft: !!draft,
+    limit: 100,
+  });
 
   return {
-    ...data,
-    honeys: data.honeys
-      ?.filter((content) => content.available)
-      .map((content) => ({
-        ...content,
-        honey: {
-          ...content.honey,
-          flowers: content.honey.flowers?.map((flower) => flower as Flower),
-          picture: content.honey.picture as Media,
-        },
+    ...honeysPage,
+    picture: honeysPage.picture as Media,
+    honeys: honeys.docs
+      .filter((honey) => honey.available)
+      .map((honey) => ({
+        ...honey,
+        flowers: honey.flowers?.map((flower) => flower as Flower),
+        picture: honey.picture as Media,
       })),
   };
 };

@@ -41,23 +41,19 @@ const HoneysClient: FC<{
       <div className="flex flex-wrap justify-center gap-8 sm:mt-8 sm:gap-16">
         {honeys.honeys
           ?.filter(
-            (content) =>
+            (honey) =>
               currentFilter === "Toutes" ||
-              content.honey.flowers?.find(
-                (flower) => flower.name === currentFilter,
-              ),
+              honey.flowers?.find((flower) => flower.name === currentFilter),
           )
-          .map((content) => (
+          .map((honey) => (
             <Honey
-              key={content.honey.id}
-              title={content.honey.title}
-              picture={content.honey.picture.url ?? ""}
-              pictureAlt={content.honey.picture.alt}
-              weight={content.honey.weight ?? ""}
-              price={content.honey.price ?? ""}
-              flowers={
-                content.honey.flowers?.map((flower) => flower.name) ?? []
-              }
+              key={honey.id}
+              title={honey.title}
+              picture={honey.picture.url ?? ""}
+              pictureAlt={honey.picture.alt}
+              weight={honey.weight ?? ""}
+              price={honey.price ?? ""}
+              flowers={honey.flowers?.map((flower) => flower.name) ?? []}
             />
           ))}
       </div>
