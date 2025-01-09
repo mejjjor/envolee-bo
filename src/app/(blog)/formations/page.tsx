@@ -5,11 +5,13 @@ import PictureParagraph from "@/components/PictureParagraph";
 import { getCourses } from "@/api";
 import { RichText } from "@payloadcms/richtext-lexical/react";
 import { RefreshRouteOnSave } from "@/components/RefreshRouterOnSave";
+import { Metadata } from "next";
 import { getSeo } from "@/utils/seo";
 
-const courses = await getCourses({});
-const metadata = getSeo(courses);
-export { metadata };
+export async function generateMetadata(): Promise<Metadata> {
+  const courses = await getCourses({});
+  return await getSeo(courses);
+}
 
 export const revalidate = 60;
 

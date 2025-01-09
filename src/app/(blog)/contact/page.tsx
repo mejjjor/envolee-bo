@@ -6,10 +6,12 @@ import { FC, HTMLInputTypeAttribute } from "react";
 import { submitForm } from "./action";
 import { getContact } from "@/api";
 import { getSeo } from "@/utils/seo";
+import { Metadata } from "next";
 
-const contact = await getContact({});
-const metadata = getSeo(contact);
-export { metadata };
+export async function generateMetadata(): Promise<Metadata> {
+  const contact = await getContact({});
+  return await getSeo(contact);
+}
 
 export default async function Courses({
   searchParams,

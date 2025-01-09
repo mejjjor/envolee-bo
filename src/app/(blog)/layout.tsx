@@ -11,12 +11,13 @@ const poppins = Poppins({
   weight: ["400", "600"],
 });
 
-const home = await getHome({});
-
-export const metadata: Metadata = {
-  title: home.seo[0]?.title ?? "",
-  description: home.seo[0]?.description ?? "",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const home = await getHome({});
+  return {
+    title: home.seo[0]?.title ?? "",
+    description: home.seo[0]?.description ?? "",
+  };
+}
 
 export default async function RootLayout({
   children,

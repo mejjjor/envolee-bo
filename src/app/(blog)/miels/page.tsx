@@ -8,10 +8,12 @@ import { Flower } from "@/payload-types";
 import { RefreshRouteOnSave } from "@/components/RefreshRouterOnSave";
 import { getHoneys } from "@/api";
 import { getSeo } from "@/utils/seo";
+import { Metadata } from "next";
 
-const honeys = await getHoneys({});
-const metadata = getSeo(honeys);
-export { metadata };
+export async function generateMetadata(): Promise<Metadata> {
+  const honeys = await getHoneys({});
+  return await getSeo(honeys);
+}
 
 export const revalidate = 60;
 

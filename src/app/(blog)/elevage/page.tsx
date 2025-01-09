@@ -5,10 +5,12 @@ import PictureParagraph from "@/components/PictureParagraph";
 import { getFarming } from "@/api";
 import { RichText } from "@payloadcms/richtext-lexical/react";
 import { getSeo } from "@/utils/seo";
+import { Metadata } from "next";
 
-const farming = await getFarming({});
-const metadata = getSeo(farming);
-export { metadata };
+export async function generateMetadata(): Promise<Metadata> {
+  const farming = await getFarming({});
+  return await getSeo(farming);
+}
 
 export const revalidate = 60;
 
