@@ -4,6 +4,11 @@ import Title from "@/components/Title";
 import PictureParagraph from "@/components/PictureParagraph";
 import { getFarming } from "@/api";
 import { RichText } from "@payloadcms/richtext-lexical/react";
+import { getSeo } from "@/utils/seo";
+
+const farming = await getFarming({});
+const metadata = getSeo(farming);
+export { metadata };
 
 export const revalidate = 60;
 

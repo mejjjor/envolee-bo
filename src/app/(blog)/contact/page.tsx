@@ -5,6 +5,11 @@ import PictureParagraph from "@/components/PictureParagraph";
 import { FC, HTMLInputTypeAttribute } from "react";
 import { submitForm } from "./action";
 import { getContact } from "@/api";
+import { getSeo } from "@/utils/seo";
+
+const contact = await getContact({});
+const metadata = getSeo(contact);
+export { metadata };
 
 export default async function Courses({
   searchParams,

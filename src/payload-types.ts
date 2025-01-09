@@ -111,6 +111,7 @@ export interface Honey {
 export interface Media {
   id: number;
   alt: string;
+  prefix?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -246,6 +247,7 @@ export interface FlowersSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  prefix?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -328,6 +330,13 @@ export interface Home {
     [k: string]: unknown;
   };
   picture: number | Media;
+  seo: {
+    title?: string | null;
+    description?: string | null;
+    id?: string | null;
+    blockName?: string | null;
+    blockType: 'Seo';
+  }[];
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -340,6 +349,15 @@ export interface HoneyPage {
   id: number;
   title: string;
   picture: number | Media;
+  seo?:
+    | {
+        title?: string | null;
+        description?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'Seo';
+      }[]
+    | null;
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -373,6 +391,15 @@ export interface Course {
         id?: string | null;
         blockName?: string | null;
         blockType: 'Content';
+      }[]
+    | null;
+  seo?:
+    | {
+        title?: string | null;
+        description?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'Seo';
       }[]
     | null;
   _status?: ('draft' | 'published') | null;
@@ -410,6 +437,15 @@ export interface Farming {
         blockType: 'Content';
       }[]
     | null;
+  seo?:
+    | {
+        title?: string | null;
+        description?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'Seo';
+      }[]
+    | null;
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -422,6 +458,15 @@ export interface Contact {
   id: number;
   title: string;
   picture: number | Media;
+  seo?:
+    | {
+        title?: string | null;
+        description?: string | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'Seo';
+      }[]
+    | null;
   _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
@@ -434,6 +479,18 @@ export interface HomeSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   picture?: T;
+  seo?:
+    | T
+    | {
+        Seo?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
   _status?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -446,6 +503,18 @@ export interface HomeSelect<T extends boolean = true> {
 export interface HoneyPageSelect<T extends boolean = true> {
   title?: T;
   picture?: T;
+  seo?:
+    | T
+    | {
+        Seo?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
   _status?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -466,6 +535,18 @@ export interface CourseSelect<T extends boolean = true> {
           | {
               description?: T;
               picture?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
+  seo?:
+    | T
+    | {
+        Seo?:
+          | T
+          | {
+              title?: T;
+              description?: T;
               id?: T;
               blockName?: T;
             };
@@ -494,6 +575,18 @@ export interface FarmingSelect<T extends boolean = true> {
               blockName?: T;
             };
       };
+  seo?:
+    | T
+    | {
+        Seo?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
   _status?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -506,6 +599,18 @@ export interface FarmingSelect<T extends boolean = true> {
 export interface ContactSelect<T extends boolean = true> {
   title?: T;
   picture?: T;
+  seo?:
+    | T
+    | {
+        Seo?:
+          | T
+          | {
+              title?: T;
+              description?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
   _status?: T;
   updatedAt?: T;
   createdAt?: T;

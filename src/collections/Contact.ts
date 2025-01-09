@@ -1,4 +1,5 @@
 import type { GlobalConfig } from "payload";
+import SeoBlock from "./SeoBlock";
 
 export const Contact: GlobalConfig = {
   access: {
@@ -41,6 +42,20 @@ export const Contact: GlobalConfig = {
       type: "upload",
       relationTo: "media",
       required: true,
+    },
+    {
+      name: "seo",
+      labels: {
+        singular: {
+          fr: "Référencement",
+        },
+        plural: {
+          fr: "Référencements",
+        },
+      },
+      type: "blocks",
+      maxRows: 1,
+      blocks: [SeoBlock],
     },
   ],
 };

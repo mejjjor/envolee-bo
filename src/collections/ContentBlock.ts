@@ -1,13 +1,13 @@
 import { Block } from "payload";
 
 const ContentBlock: Block = {
-  slug: "Content", // required
+  slug: "Content",
   labels: {
-    singular: "Un bloc de contenu",
-    plural: "Des blocs de contenu",
+    singular: "Contenu",
+    plural: "Contenus",
   },
-  imageURL: "https://img.icons8.com/hatch/64/content.png",
-  imageAltText: "Un bloc de contenu",
+  imageURL: "/icons/text.svg",
+  imageAltText: "Contenu",
   fields: [
     {
       name: "description",

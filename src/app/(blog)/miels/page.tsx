@@ -7,10 +7,13 @@ import PageClient from "./PageClient";
 import { Flower } from "@/payload-types";
 import { RefreshRouteOnSave } from "@/components/RefreshRouterOnSave";
 import { getHoneys } from "@/api";
+import { getSeo } from "@/utils/seo";
 
-// export const dynamic = 'force-dynamic';
+const honeys = await getHoneys({});
+const metadata = getSeo(honeys);
+export { metadata };
+
 export const revalidate = 60;
-// export const experimental_ppr = true
 
 export default async function Honeys({
   searchParams,

@@ -2,7 +2,7 @@ import { getPayload } from "payload";
 import config from "@/payload.config";
 import { Flower, Media } from "@/payload-types";
 
-export const getHome = async ({ draft }: { draft: string }) => {
+export const getHome = async ({ draft }: { draft?: string }) => {
   const payload = await getPayload({ config });
 
   const home = await payload.findGlobal({
@@ -17,7 +17,7 @@ export const getHome = async ({ draft }: { draft: string }) => {
   };
 };
 
-export const getHoneys = async ({ draft }: { draft: string }) => {
+export const getHoneys = async ({ draft }: { draft?: string }) => {
   const payload = await getPayload({ config });
 
   const honeysPage = await payload.findGlobal({
@@ -46,7 +46,7 @@ export const getHoneys = async ({ draft }: { draft: string }) => {
   };
 };
 
-export const getCourses = async ({ draft }: { draft: string }) => {
+export const getCourses = async ({ draft }: { draft?: string }) => {
   const payload = await getPayload({ config });
 
   const courses = await payload.findGlobal({
@@ -65,7 +65,7 @@ export const getCourses = async ({ draft }: { draft: string }) => {
   };
 };
 
-export const getFarming = async ({ draft }: { draft: string }) => {
+export const getFarming = async ({ draft }: { draft?: string }) => {
   const payload = await getPayload({ config });
 
   const courses = await payload.findGlobal({
@@ -84,7 +84,7 @@ export const getFarming = async ({ draft }: { draft: string }) => {
   };
 };
 
-export const getContact = async ({ draft }: { draft: string }) => {
+export const getContact = async ({ draft }: { draft?: string }) => {
   const payload = await getPayload({ config });
 
   const contact = await payload.findGlobal({
