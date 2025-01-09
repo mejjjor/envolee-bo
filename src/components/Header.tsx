@@ -18,9 +18,9 @@ const Header = () => {
         <NavDesktop />
       </header>
       <header className="my-2 flex justify-end lg:hidden">
-        {pathname !== routes.home && (
+        <Link className="w-full" href={routes.home}>
           <Logo className="h-16" logoClassName="w-32" />
-        )}
+        </Link>
         <NavMobile />
       </header>
       <div className="sticky top-0 z-10 hidden h-24 w-full bg-background backdrop-blur-[1px] lg:block" />

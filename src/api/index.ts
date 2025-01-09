@@ -28,7 +28,7 @@ export const getHoneys = async ({ draft }: { draft: string }) => {
 
   const data = {
     ...honeys,
-    content: honeys.honeys?.map((content) => ({
+    honeys: honeys.honeys?.map((content) => ({
       ...content,
       honey: content.honey as Honey,
     })),
@@ -37,7 +37,7 @@ export const getHoneys = async ({ draft }: { draft: string }) => {
 
   return {
     ...data,
-    content: data.content
+    honeys: data.honeys
       ?.filter((content) => content.available)
       .map((content) => ({
         ...content,

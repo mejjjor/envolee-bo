@@ -60,6 +60,7 @@ export default buildConfig({
           prefix: process.env.NODE_ENV,
         },
       },
+      cacheControlMaxAge: 5 * 60, // 5 minutes
       token: process.env.BLOB_READ_WRITE_TOKEN ?? "",
     }),
   ],

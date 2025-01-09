@@ -9,7 +9,7 @@ export const routes = {
 
 export const nav = [
   {
-    label: "Être apiculteur",
+    label: "Accueil",
     href: routes.home,
   },
   {
@@ -21,7 +21,7 @@ export const nav = [
     href: routes.courses,
   },
   {
-    label: "Elevage",
+    label: "Élevage",
     href: routes.farming,
   },
   {

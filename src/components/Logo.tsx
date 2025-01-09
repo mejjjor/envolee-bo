@@ -17,19 +17,21 @@ const Logo: FC<{
       <div className={cn("relative flex justify-center", logoClassName)}>
         <div className="absolute h-full">
           <Image
+            className="h-full w-auto object-contain"
             src={withSub ? logoSub : logo}
             alt="logo lenvolé"
-            className="h-full w-auto object-contain"
+            sizes="(max-width: 1024px) 100vw, 1024px"
             priority
           />
         </div>
-        <div className="animate-flyzindex absolute h-full">
+        <div className="absolute h-full animate-flyzindex">
           <Image
-            src={nuee}
-            alt="nuee lenvolé"
             className={cn("h-full w-auto object-contain", {
               "animate-fly": withAnimate,
             })}
+            src={nuee}
+            alt="nuee lenvolé"
+            sizes="(max-width: 1024px) 100vw, 1024px"
             priority
           />
         </div>

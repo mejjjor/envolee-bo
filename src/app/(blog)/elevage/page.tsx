@@ -7,7 +7,7 @@ import { RichText } from "@payloadcms/richtext-lexical/react";
 
 export const revalidate = 60;
 
-export default async function Courses({
+export default async function Farming({
   searchParams,
 }: {
   searchParams: Promise<{ draft: string }>;
@@ -20,10 +20,11 @@ export default async function Courses({
     <>
       <Hero className="overflow-hidden">
         <Image
+          className="object-cover"
           src={farming.picture.url ?? ""}
           alt={farming.picture.alt}
           fill
-          className="object-cover"
+          sizes="(max-width: 1024px) 100vw, 1024px"
         />
       </Hero>
       <Title>{farming.title}</Title>

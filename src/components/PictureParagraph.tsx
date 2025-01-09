@@ -13,10 +13,11 @@ const PictureParagraph: FC<{
       <div className="flex items-center justify-center lg:w-[50%]">
         <div className="relative flex h-[300px] w-full max-w-[600px] overflow-hidden rounded-xl lg:h-[400px]">
           <Image
+            className="self-center object-cover"
             src={src}
             alt={alt}
             fill
-            className="self-center object-cover"
+            sizes="(max-width: 1024px) 100vw, 1024px"
             priority
           />
         </div>

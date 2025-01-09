@@ -60,9 +60,9 @@ export default function NavMobile() {
       />
       <nav
         className={cn(
-          "fixed -right-64 top-0 z-40 h-screen w-64 bg-accent transition-all",
+          "fixed left-[100vw] top-0 z-40 h-screen w-64 bg-accent transition-all",
           {
-            "right-0": isDrawerOpen,
+            "left-[calc(100vw-16rem)]": isDrawerOpen,
           },
         )}
       >

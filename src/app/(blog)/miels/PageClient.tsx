@@ -3,7 +3,6 @@
 import Honey from "@/components/Honey";
 import { FC, useState } from "react";
 import { cn } from "@/utils/cn";
-import { Flower } from "@/payload-types";
 import { getHoneys } from "@/api";
 
 // export const dynamic = 'force-dynamic';
@@ -40,12 +39,12 @@ const HoneysClient: FC<{
       </div>
 
       <div className="flex flex-wrap justify-center gap-8 sm:mt-8 sm:gap-16">
-        {honeys.content
+        {honeys.honeys
           ?.filter(
             (content) =>
               currentFilter === "Toutes" ||
               content.honey.flowers?.find(
-                (flower) => (flower as Flower).name === currentFilter,
+                (flower) => flower.name === currentFilter,
               ),
           )
           .map((content) => (
@@ -57,9 +56,7 @@ const HoneysClient: FC<{
               weight={content.honey.weight ?? ""}
               price={content.honey.price ?? ""}
               flowers={
-                content.honey.flowers?.map(
-                  (flower) => (flower as Flower).name,
-                ) ?? []
+                content.honey.flowers?.map((flower) => flower.name) ?? []
               }
             />
           ))}

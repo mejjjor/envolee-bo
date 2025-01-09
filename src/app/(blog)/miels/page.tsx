@@ -23,7 +23,7 @@ export default async function Honeys({
 
   // const honeys = await API.getHoneys();
 
-  const flowersList = honeys.content?.reduce<string[]>((acc, honey) => {
+  const flowersList = honeys.honeys?.reduce<string[]>((acc, honey) => {
     acc.push(
       ...(honey.honey.flowers?.map((flower) => (flower as Flower).name) ?? []),
     );
@@ -40,10 +40,11 @@ export default async function Honeys({
 
       <Hero className="overflow-hidden">
         <Image
-          src={honeys.picture.url ?? ""}
-          fill
           className="object-cover"
+          src={honeys.picture.url ?? ""}
           alt={honeys.picture.alt}
+          fill
+          sizes="(max-width: 1024px) 100vw, 1024px"
         />
       </Hero>
       <Title>{honeys.title}</Title>

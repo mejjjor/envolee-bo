@@ -23,10 +23,11 @@ export default async function Courses({
 
       <Hero className="overflow-hidden">
         <Image
+          className="object-cover"
           src={courses.picture.url ?? ""}
           alt={courses.picture.alt}
           fill
-          className="object-cover"
+          sizes="(max-width: 1024px) 100vw, 1024px"
         />
       </Hero>
       <Title>{courses.title}</Title>
